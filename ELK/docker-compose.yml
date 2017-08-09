@@ -1,0 +1,29 @@
+version: "3"
+services:
+  elasticsearch:
+    image: elasticsearch
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  kibana:
+    image: kibana
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 5601:5601
+    environment:
+      SERVER_NAME: kibana.qjdchina.com
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  esdata:
+    driver: local
