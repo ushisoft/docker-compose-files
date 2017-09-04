@@ -2,6 +2,7 @@ version: "3"
 services:
   mysql:
     image: mysql:5.7
+    hostname: mysql
     volumes:
       - /var/lib/mysql
     ports:
@@ -11,6 +12,44 @@ services:
       MYSQL_DATABASE: clms
       MYSQL_USER: clms
       MYSQL_PASSWORD: clms_1
+    deploy:
+      restart_policy:
+        condition: on-failure
+  mongo:
+    image: mongo
+    hostname: mongo
+    volumes:
+      - /var/lib/mongodb
+    ports:
+      - "27017:27017"
+    deploy:
+      restart_policy:
+        condition: on-failure
+  redis:
+    image: redis
+    hostname: redis
+    volumes:
+      - /data
+    ports:
+      - "6379:6379"
+    deploy:
+      restart_policy:
+        condition: on-failure
+  rabbit1:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit1"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq1"
+    volumes:
+      - "./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
     deploy:
       restart_policy:
         condition: on-failure
