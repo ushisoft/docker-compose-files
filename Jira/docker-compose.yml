@@ -1,0 +1,19 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7
+    hostname: mysql
+    volumes:
+      - /var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: westos
+      MYSQL_DATABASE: jira
+      MYSQL_USER: jira
+      MYSQL_PASSWORD: jira_1
+  jira:
+    image: cptactionhank/atlassian-jira:latest
+    hostname: jira
+    ports:
+      - "8080:8080"
