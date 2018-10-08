@@ -1,0 +1,8 @@
+shadowsocks:
+  image: shadowsocks/shadowsocks-libev
+  ports:
+    - "10678:8388"
+  environment:
+    - METHOD=aes-256-gcm
+    - PASSWORD=ApHiendQio3
+  restart: always
